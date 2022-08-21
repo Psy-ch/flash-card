@@ -100,12 +100,13 @@ With the server runnning, one can visit their project in browser by using() http
 
 1. Creating the Django flashcard app
 You need only one app besides your project. The primary purpose of that app is to handle your app’s cards, so you can call the app cards. Run the command to create the cards app:
-```
+``` 
 (venv)$ python manage.py startapp cards
 ```
 This command creates a cards/ folder in your project, with some predefined files. 
 To connect the cards app to the flashcards project, add it to INSTALLED_APPS in flashcards/settings.py:
-```
+
+``` python 
 flashcards/settings.py
 
 INSTALLED_APPS = [
@@ -138,7 +139,8 @@ urlpatterns = [
 First, you need to tell Django that your cards app takes care of the root URL of your project now.
 
 With this URL pattern in place, Django passes on any URLs of your project, except admin/, to your cards app. To handle this, your cards app needs its own urls.py file, which takes over the responsibility of dispatching URLs:
-``` # cards/urls.py
+``` python
+ # cards/urls.py
 
 from django.urls import path
 from django.views.generic import TemplateView
