@@ -36,6 +36,7 @@ by Angelene Santosh  August, 2022
 Flashcards are a great tool when you want to memorize a new topic or learn a new language. You write a question on the front of the card and the answer on the back of the card. Then you can test your memory by going through the flashcards. The more often you show a card to yourself, the better your chances of memorizing its content. With Django, you can build your own flashcards app.
 
 By following this tutorial, you’ll build a Django flashcards app that replicates a spaced repetition system, which can boost your learning potential.
+
 ![Uploading Screenshot 2022-08-21 at 11.01.47 AM.png…]()
 
 
@@ -91,7 +92,8 @@ $ source venv/bin/activate
 (venv)$ django-admin startproject flashcards .
 ```
 4. To run the web server
-```(venv)$ python manage.py runserver
+```
+(venv)$ python manage.py runserver
 ```
 With the server runnning, one can visit their project in browser by using() http://127.0.0.1:8000 or http://localhost:8000:_
 ## Step: 2 Set up your flashcards app
@@ -103,7 +105,7 @@ You need only one app besides your project. The primary purpose of that app is t
 ```
 This command creates a cards/ folder in your project, with some predefined files. 
 To connect the cards app to the flashcards project, add it to INSTALLED_APPS in flashcards/settings.py:
-
+```
 flashcards/settings.py
 
 INSTALLED_APPS = [
@@ -115,11 +117,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "cards.apps.CardsConfig",
 ]
-
+```
 
 
 2. Launching your landing page
-So far, Django still shows the jiggling rocket on the landing page of your flashcards project. In this section, you’ll implement your custom landing page by using a base template.Open urls.py in your flashcards/ folder and include your cards URLs:
+So far, Django still shows the jiggling rocket on the landing page of your flashcards project. In this section, you’ll implement your custom landing page by using a base template.
+
+```
 flashcards/urls.py
 
 from django.contrib import admin
@@ -129,10 +133,49 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("cards.urls")),
 ]
-
+```
 
 First, you need to tell Django that your cards app takes care of the root URL of your project now.
-You also pass in name="home" as an optional argument. With a name, you can reference views conveniently in your Django project. So even if you decide to change the URL pattern at some point, you don’t have to update any templates.
+
+With this URL pattern in place, Django passes on any URLs of your project, except admin/, to your cards app. To handle this, your cards app needs its own urls.py file, which takes over the responsibility of dispatching URLs:
+``` # cards/urls.py
+
+from django.urls import path
+from django.views.generic import TemplateView
+
+urlpatterns = [
+    path(
+        "",
+        TemplateView.as_view(template_name="cards/base.html"),
+        name="home"
+    ),
+]
+```
+To serve the template that you’re referencing to, create base.html in cards/templates/cards/:
+
+```<!-- cards/templates/cards/base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flashcards</title>
+</head>
+
+<body>
+    <header>
+        <h1>Flashcards App</h1>
+    </header>
+    <main>
+        {% block content %}
+            <h2>Welcome to your Flashcards app!</h2>
+        {% endblock content %}
+    </main>
+</body>
+
+</html>
+```
+
 
 
 
