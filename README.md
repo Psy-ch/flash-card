@@ -37,7 +37,7 @@ Flashcards are a great tool when you want to memorize a new topic or learn a new
 
 By following this tutorial, you’ll build a Django flashcards app that replicates a spaced repetition system, which can boost your learning potential.
 
-![Uploading Screenshot 2022-08-21 at 11.01.47 AM.png…]()
+![Flash Card Screenshot](https://github.com/Psy-ch/flash-card/blob/main/img/flash_card_screen_01.png)
 
 
 In this step-by-step project, you’ll learn how to:
@@ -119,7 +119,6 @@ INSTALLED_APPS = [
     "cards.apps.CardsConfig",
 ]
 ```
-
 
 2. Launching your landing page
 So far, Django still shows the jiggling rocket on the landing page of your flashcards project. In this section, you’ll implement your custom landing page by using a base template.
